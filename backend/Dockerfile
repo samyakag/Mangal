@@ -14,11 +14,14 @@ RUN go build -o main .
 # Stage 2: Run the application
 FROM alpine:latest
 
+# Install ca-certificates for MongoDB Atlas TLS connections
+RUN apk --no-cache add ca-certificates
+
 WORKDIR /app
 
 COPY --from=builder /app/main .
 
-EXPOSE 8080
+EXPOSE 8001
 
 CMD ["./main"]
 

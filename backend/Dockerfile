@@ -9,13 +9,17 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o main .
+# Build with CGO disabled for better compatibility
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 # Stage 2: Run the application
-FROM alpine:latest
+# Use Debian slim for better TLS/SSL compatibility with MongoDB Atlas
+FROM debian:bookworm-slim
 
 # Install ca-certificates for MongoDB Atlas TLS connections
-RUN apk --no-cache add ca-certificates
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 

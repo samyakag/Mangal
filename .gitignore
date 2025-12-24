@@ -82,3 +82,13 @@ agenthub/agents/youtube/db
 
 # Mobile development
 android-sdk/ 
+# Deployment guides and documentation (local only)
+DEPLOYMENT.md
+DEPLOYMENT_SUMMARY.md
+SETUP_GUIDE.md
+QUICKSTART.md
+RENDER_DEPLOYMENT_STEPS.md
+DOCKER_TEST_REPORT.md
+TROUBLESHOOTING.md
+.deployment-checklist.md
+test-local-setup.sh

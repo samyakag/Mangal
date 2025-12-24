@@ -4,7 +4,7 @@ import type { UserConfig as VitestUserConfig } from 'vitest/config'; // Alias Us
 
 // https://vitejs.dev/config/
 const viteConfig = defineConfig({
-  base: '/YOUR_REPOSITORY_NAME/', // Base URL for deployment
+  base: '/Mangal/', // Base URL for GitHub Pages deployment
   plugins: [react()],
   root: 'public', // Set the root to the public directory
   build: {

@@ -1,4 +1,5 @@
 import React from 'react';
+import useRazorpay from '../hooks/useRazorpay';
 import type { CartItem, CustomerInfo } from '../types';
 
 interface CheckoutModalProps {
@@ -7,7 +8,6 @@ interface CheckoutModalProps {
   cart: CartItem[];
   onClose: () => void;
   onCustomerInfoChange: (info: CustomerInfo) => void;
-  onHandleCheckout: () => void;
   getTotalAmount: () => number;
 }
 
@@ -17,10 +17,15 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   cart,
   onClose,
   onCustomerInfoChange,
-  onHandleCheckout,
   getTotalAmount,
 }) => {
+  const { openRazorpay } = useRazorpay();
+
   if (!showCheckout) return null;
+
+  const handleCheckout = () => {
+    openRazorpay(cart);
+  };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -87,7 +92,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
           </div>
 
           <button
-            onClick={onHandleCheckout}
+            onClick={handleCheckout}
             disabled={!customerInfo.name || !customerInfo.phone || !customerInfo.address}
             className="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-6 rounded-lg hover:from-green-500 hover:to-green-600 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >

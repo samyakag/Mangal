@@ -28,11 +28,14 @@ type CustomerInfo struct {
 }
 
 type Order struct {
-	ID           string       `json:"id" bson:"id"`
-	CustomerInfo CustomerInfo `json:"customer_info" bson:"customer_info"`
-	Items        []CartItem   `json:"items" bson:"items"`
-	TotalAmount  float64      `json:"total_amount" bson:"total_amount"`
-	Status       string       `json:"status" bson:"status"`
-	OrderDate    time.Time    `json:"order_date" bson:"order_date"`
-	Notes        string       `json:"notes,omitempty" bson:"notes,omitempty"`
+	ID                    string       `json:"id" bson:"id"`
+	CustomerInfo          CustomerInfo `json:"customer_info" bson:"customer_info"`
+	Items                 []CartItem   `json:"items" bson:"items"`
+	TotalAmount           float64      `json:"total_amount" bson:"total_amount"`
+	Status                string       `json:"status" bson:"status"`
+	OrderDate             time.Time    `json:"order_date" bson:"order_date"`
+	Notes                 string       `json:"notes,omitempty" bson:"notes,omitempty"`
+	PaymentGatewayOrderID string       `json:"payment_gateway_order_id,omitempty" bson:"payment_gateway_order_id,omitempty"`
+	PaymentStatus         string       `json:"payment_status,omitempty" bson:"payment_status,omitempty"`
+	PaymentMethod         string       `json:"payment_method,omitempty" bson:"payment_method,omitempty"`
 }

@@ -26,10 +26,7 @@ func NewPaymentService() *PaymentService {
 		panic("RAZORPAY_KEY_ID or RAZORPAY_KEY_SECRET environment variable not set")
 	}
 
-	client, err := razorpay.NewClient(keyId, keySecret)
-	if err != nil {
-		panic(err)
-	}
+	client := razorpay.NewClient(keyId, keySecret)
 
 	return &PaymentService{razorpayClient: client}
 }

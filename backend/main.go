@@ -89,6 +89,11 @@ func main() {
 		})
 	}
 
-	log.Println("Starting server on :8080")
-	router.Run(":8001")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8001"
+	}
+	log.Printf("Starting server on :%s", port)
+	log.Printf("CORS enabled for origins: %v", allowedOrigins)
+	router.Run(":" + port)
 }

@@ -114,17 +114,19 @@ const App = () => {
         onAddToCart={addToCart}
       />
 
-      <CartModal
-        cart={cart}
-        onClose={() => setShowCart(false)}
-        onRemoveFromCart={removeFromCart}
-        onUpdateQuantity={updateQuantity}
-        onProceedToCheckout={() => {
-          setShowCart(false);
-          setShowCheckout(true);
-        }}
-        getTotalAmount={getTotalAmount}
-      />
+      {showCart && (
+        <CartModal
+          cart={cart}
+          onClose={() => setShowCart(false)}
+          onRemoveFromCart={removeFromCart}
+          onUpdateQuantity={updateQuantity}
+          onProceedToCheckout={() => {
+            setShowCart(false);
+            setShowCheckout(true);
+          }}
+          getTotalAmount={getTotalAmount}
+        />
+      )}
 
       <CheckoutModal
         showCheckout={showCheckout}

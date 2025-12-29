@@ -1,8 +1,8 @@
 import './App.css';
 
 import type { CartItem, CustomerInfo, OrderSuccess, Product } from './types';
-import { createOrder, fetchCategories, fetchProducts } from './services/api';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchCategories, fetchProducts } from './services/api';
+import { useQuery } from '@tanstack/react-query';
 
 import CartModal from './components/CartModal';
 import CategoryFilter from './components/CategoryFilter';
@@ -30,20 +30,6 @@ const App = () => {
 
   const { data: products, isLoading: isLoadingProducts, error: productsError } = useQuery<Product[]>({ queryKey: ['products'], queryFn: fetchProducts });
   const { data: categories, isLoading: isLoadingCategories, error: categoriesError } = useQuery<string[]>({ queryKey: ['categories'], queryFn: fetchCategories });
-
-  const createOrderMutation = useMutation({
-    mutationFn: createOrder,
-    onSuccess: (data) => {
-      setOrderSuccess(data);
-      setCart([]);
-      setShowCheckout(false);
-      setCustomerInfo({ name: '', phone: '', email: '', address: '' });
-    },
-    onError: (error) => {
-      console.error('Error placing order:', error);
-      alert('Error placing order. Please try again.');
-    },
-  });
 
   const filteredProducts = selectedCategory === 'all' 
     ? products 
@@ -80,18 +66,6 @@ const App = () => {
 
   const getTotalAmount = () => {
     return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
-
-  const handleCheckout = () => {
-    const orderData = {
-      customer_info: customerInfo,
-      items: cart.map(item => ({
-        product_id: item.id,
-        quantity: item.quantity
-      })),
-      notes: ''
-    };
-    createOrderMutation.mutate(orderData);
   };
 
   if (isLoadingProducts || isLoadingCategories) {
@@ -158,7 +132,6 @@ const App = () => {
         cart={cart}
         onClose={() => setShowCheckout(false)}
         onCustomerInfoChange={setCustomerInfo}
-        onHandleCheckout={handleCheckout}
         getTotalAmount={getTotalAmount}
       />
 

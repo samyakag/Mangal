@@ -1,5 +1,5 @@
 
-import { CartItem } from "../types";
+import type { CartItem } from "../types";
 
 declare global {
   interface Window {

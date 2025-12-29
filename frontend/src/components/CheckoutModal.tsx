@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import useRazorpay from '../hooks/useRazorpay';
 import type { CartItem, CustomerInfo } from '../types';
 
@@ -7,7 +7,8 @@ interface CheckoutModalProps {
   customerInfo: CustomerInfo;
   cart: CartItem[];
   onClose: () => void;
-  onCustomerInfoChange: (info: CustomerInfo) => void;
+  onCustomerInfoChange: Dispatch<SetStateAction<CustomerInfo>>;
+  onHandleCheckout: () => void;
   getTotalAmount: () => number;
 }
 
@@ -17,6 +18,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   cart,
   onClose,
   onCustomerInfoChange,
+  onHandleCheckout,
   getTotalAmount,
 }) => {
   const { openRazorpay } = useRazorpay();

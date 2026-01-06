@@ -5,9 +5,17 @@ interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
   onViewDetails: (product: Product) => void;
+  quantityInCart?: number;
+  onUpdateQuantity?: (productId: string, newQuantity: number) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  onAddToCart,
+  onViewDetails,
+  quantityInCart = 0,
+  onUpdateQuantity
+}) => {
   return (
     <div key={product.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
       <div className="relative h-64 bg-gradient-to-br from-orange-100 to-red-100">
@@ -34,12 +42,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewD
           >
             View Details
           </button>
-          <button
-            onClick={() => onAddToCart(product)}
-            className="flex-1 bg-gradient-to-r from-orange-600 to-red-600 text-white py-2 px-4 rounded-lg hover:from-orange-500 hover:to-red-500 transition-all duration-300 font-semibold"
-          >
-            Add to Cart
-          </button>
+          {quantityInCart > 0 && onUpdateQuantity ? (
+            <div className="flex-1 flex items-center justify-between bg-gradient-to-r from-orange-600 to-red-600 text-white py-2 px-3 rounded-lg">
+              <button
+                onClick={() => onUpdateQuantity(product.id, quantityInCart - 1)}
+                className="w-8 h-8 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors font-bold text-xl"
+              >
+                −
+              </button>
+              <span className="font-semibold text-lg">{quantityInCart}</span>
+              <button
+                onClick={() => onUpdateQuantity(product.id, quantityInCart + 1)}
+                className="w-8 h-8 flex items-center justify-center hover:bg-white/20 rounded-full transition-colors font-bold text-xl"
+              >
+                +
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => onAddToCart(product)}
+              className="flex-1 bg-gradient-to-r from-orange-600 to-red-600 text-white py-2 px-4 rounded-lg hover:from-orange-500 hover:to-red-500 transition-all duration-300 font-semibold"
+            >
+              Add to Cart
+            </button>
+          )}
         </div>
       </div>
     </div>

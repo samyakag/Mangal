@@ -38,8 +38,8 @@ const App = () => {
   const addToCart = (product: Product) => {
     const existingItem = cart.find(item => item.id === product.id);
     if (existingItem) {
-      setCart(cart.map(item => 
-        item.id === product.id 
+      setCart(cart.map(item =>
+        item.id === product.id
           ? { ...item, quantity: item.quantity + 1 }
           : item
       ));
@@ -102,6 +102,8 @@ const App = () => {
                 product={product}
                 onAddToCart={addToCart}
                 onViewDetails={setSelectedProduct}
+                quantityInCart={cart.find(item => item.id === product.id)?.quantity || 0}
+                onUpdateQuantity={updateQuantity}
               />
             ))}
           </div>
